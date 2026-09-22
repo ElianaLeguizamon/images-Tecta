@@ -1,0 +1,27 @@
+body {
+  margin: 0;
+  line-height: normal;
+}
+
+:root {
+  /* Color Palette */
+  --color-black: #000;
+  --color-darkslategray: #334766;
+  --color-dimgray: #5e765c;
+  --color-gray-100: #122710;
+  --color-gray-200: #001533;
+  --color-white: #fff;
+
+  /* Typography */
+  --font-adamina: "Adamina", serif, Arial, sans-serif;
+  --font-bebas-neue: "Bebas Neue", Arial, sans-serif;
+  --font-outfit: "Outfit", sans-serif, Arial;
+
+  /* Font Sizes */
+  --fs-16: 16px;
+  --fs-18: 18px;
+  --fs-40: 40px;
+
+  /* Dimensions */
+  --height-32: 32px;
+}

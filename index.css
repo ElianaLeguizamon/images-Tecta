@@ -1,0 +1,321 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-dimgray);
+  overflow-x: hidden;
+}
+
+.desktop-9 {
+  width: 100%;
+  min-height: 1024px;
+  position: relative;
+  background-color: var(--color-dimgray);
+  border: 1px solid var(--color-black);
+  box-sizing: border-box;
+  overflow: visible !important; /* Adjusted to allow physics canvas free flow */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 88px 30px 100px;
+  isolation: isolate;
+  font-family: var(--font-outfit);
+}
+
+.desktop-9-child {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+}
+
+/* Central Hero Stage (Roof, Strings, Oval) scaled proportionally */
+.hero-center-stage {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.8);
+  transform-origin: top center;
+  width: 100%;
+  height: 950px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Oval Textured Background Shape */
+.copilot-20260917-102901-1-icon {
+  width: 565px;
+  height: 846px;
+  position: absolute;
+  top: 78px;
+  left: 50%;
+  transform: translateX(-50%);
+  object-fit: cover;
+  border-radius: 282.5px;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Chinese Roof Asset */
+.copilot-20260917-103956-1-icon {
+  width: 749px;
+  height: 258px;
+  position: absolute;
+  margin: 0 !important;
+  top: 108px;
+  left: 50%;
+  transform: translateX(-50%);
+  object-fit: cover;
+  z-index: 10;
+  filter: drop-shadow(35px 35px 35px rgba(0, 0, 0, 0.3));
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Top Navigation Section */
+.desktop-92 {
+  width: 100%;
+  max-width: 1046px;
+  position: relative;
+  top: -20px;
+  z-index: 20;
+  margin: 0 auto;
+}
+
+.desktop-93 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.vector-parent {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.frame-child {
+  width: 82px;
+  height: 58px;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+}
+
+.tecta {
+  font-family: var(--font-bebas-neue);
+  font-size: var(--fs-40);
+  letter-spacing: 0.5px;
+  color: var(--color-gray-100);
+  margin: 10px 0 0 0;
+  line-height: 1;
+  font-weight: 400;
+  user-select: none;
+}
+
+.home-parent {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+
+.home {
+  font-family: var(--font-outfit);
+  font-size: var(--fs-18);
+  font-weight: 600;
+  color: var(--color-gray-200);
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.home:hover {
+  opacity: 0.75;
+  transform: translateY(-1px);
+}
+
+.auth-container {
+  background-color: var(--color-gray-200);
+  border: none;
+  border-radius: 2px;
+  padding: 8px 24px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-container:hover {
+  background-color: #0b2447;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 21, 51, 0.25);
+}
+
+.sign-up {
+  font-family: var(--font-outfit);
+  font-size: var(--fs-16);
+  font-weight: 500;
+  color: var(--color-white);
+  line-height: normal;
+  user-select: none;
+}
+
+/* Physics Curtain Canvas Alignment under TECTA Roof */
+#container {
+  position: absolute;
+  top: 320px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 100%;
+  height: 600px;
+  overflow: visible !important;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%);
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+#container canvas {
+  display: block;
+  margin: 0 auto;
+  pointer-events: auto;
+  overflow: visible !important;
+  background: transparent !important;
+}
+
+/* Bottom Content: Paragraph & Headline */
+.featuring-the-iconic-double-ea-parent {
+  width: 100%;
+  max-width: 1320px;
+  position: absolute;
+  bottom: 475px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 60px;
+  box-sizing: border-box;
+  z-index: 20;
+  pointer-events: auto;
+}
+
+.featuring-the-iconic {
+  max-width: 323px;
+  font-family: var(--font-outfit);
+  font-size: var(--fs-16);
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--color-gray-200);
+}
+
+.article-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.the-myths-of-chinese-roofs-parent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+}
+
+.the-myths-of {
+  font-family: var(--font-adamina);
+  font-size: 50px;
+  line-height: 1.35;
+  font-weight: 400;
+  color: var(--color-gray-200);
+  max-width: 340px;
+  margin: 0;
+}
+
+.frame-item {
+  width: 90px;
+  height: 2px;
+  background-color: var(--color-gray-200);
+  position: absolute;
+  right: -105px;
+  bottom: 18px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1280px) {
+  .featuring-the-iconic-double-ea-parent {
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .desktop-9 {
+    min-height: 1100px;
+    padding-bottom: 250px;
+  }
+
+  .featuring-the-iconic-double-ea-parent {
+    bottom: 380px;
+  }
+
+  .copilot-20260917-103956-1-icon {
+    width: min(749px, 90vw);
+    height: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .copilot-20260917-102901-1-icon {
+    width: min(565px, 80vw);
+    height: auto;
+    aspect-ratio: 565 / 846;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 768px) {
+  .desktop-9 {
+    min-height: 1200px;
+    padding-top: 60px;
+  }
+
+  .desktop-92 {
+    padding: 0 16px;
+  }
+
+  .home-parent {
+    gap: 20px;
+  }
+
+  .home {
+    font-size: 16px;
+  }
+
+  .featuring-the-iconic-double-ea-parent {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 32px;
+    position: relative;
+    bottom: auto;
+    margin-top: 500px;
+    padding: 0 20px;
+  }
+
+  .the-myths-of {
+    font-size: 38px;
+  }
+
+  .frame-item {
+    display: none;
+  }
+}
