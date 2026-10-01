@@ -11,13 +11,18 @@ const getEdgeIdsForGridId = () => [];
 
 console.clear();
 
-let fullCode = 'TECTA 建筑 结构 历史 传说 中式 瓦 梁 飞檐 斗拱 传统 文化的魅力 Architecture Roof Myths ';
+let fullCode = 'Architecture Roof Myths TECTA 建筑 结构 历史 传说 中式 瓦 梁 飞檐 斗拱 传统 文化 魅力 ';
+let updateCurtainText = (newText) => {
+  if (typeof window !== 'undefined' && window.updateCurtainText) {
+    window.updateCurtainText(newText);
+  }
+};
 
 const w = 449;
 const h = 557;
 const dpr = Math.min((typeof window !== 'undefined' ? window.devicePixelRatio : 1) || 1, 2);
 
-// Configuración original y pura de Liam Egan
+// Configuración original y estándar de Liam Egan (compartida para todas las pantallas)
 const CONFIG = {
   awidth: w,
   aheight: h,
@@ -32,6 +37,7 @@ const CONFIG = {
   mouseStrength: 4,
   contain: false,
   randomSolve: false,
+  paddingLeft: 0,
   preset: ''
 };
 CONFIG.cellWidth = CONFIG.awidth / (CONFIG.gridW - 1);
@@ -67,7 +73,7 @@ function main() {
     return;
   }
 
-  fullCode = 'TECTA 建筑 结构 历史 传说 中式 瓦 梁 飞檐 斗拱 传统 文化的魅力 Architecture Roof Myths ';
+  fullCode = 'Architecture Roof Myths TECTA 建筑 结构 历史 传说 中式 瓦 梁 飞檐 斗拱 传统 文化 魅力 ';
   const {
     awidth: width,
     aheight: height,
@@ -85,19 +91,33 @@ function main() {
   const charCanvases = {};
   const fontSize = Math.max(13, Math.round(cellHeight * 1.08));
   const box = Math.ceil(fontSize * 1.6);
-  for (const ch of new Set(fullCode)) {
-    if (ch === ' ') continue;
+
+  function createCharCanvas(ch) {
+    if (charCanvases[ch] || ch === ' ') return;
     const off = document.createElement('canvas');
     off.width = off.height = box * dpr;
     const octx = off.getContext('2d');
     octx.scale(dpr, dpr);
-    octx.font = `300 ${fontSize}px 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif`;
+    octx.font = `300 ${fontSize}px 'Outfit', 'Noto Sans Thai', 'Noto Sans Arabic', 'Noto Sans JP', 'Noto Sans SC', 'Microsoft YaHei', 'Meiryo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif`;
     octx.textAlign = 'center';
     octx.textBaseline = 'middle';
     octx.fillStyle = 'rgba(24, 28, 32, 0.85)'; // Tipografía limpia y color negro carbón elegante
     octx.fillText(ch, box / 2, box / 2);
     off.logicalSize = box;
     charCanvases[ch] = off;
+  }
+
+  function getGlyphList(text) {
+    if (typeof Intl !== 'undefined' && Intl.Segmenter) {
+      const seg = new Intl.Segmenter(undefined, { granularity: 'grapheme' });
+      return Array.from(seg.segment(text), s => s.segment);
+    }
+    return Array.from(text);
+  }
+
+  const initialGlyphs = getGlyphList(fullCode);
+  for (const ch of new Set(initialGlyphs)) {
+    createCharCanvas(ch);
   }
 
   c = document.createElement('canvas');
@@ -119,12 +139,40 @@ function main() {
       let y = j * cellHeight;
       const id = getPointID(j, i, gridH);
       const pinned = j === 0; // Fila superior anclada justo bajo el alero
-      const charIndex = (i + j * gridW) % fullCode.length;
-      const char = fullCode[charIndex] || ' ';
+      const charIndex = (i + j * gridW) % initialGlyphs.length;
+      const char = initialGlyphs[charIndex] || ' ';
       const particle = new Particle({ x, y, pinned, id, char });
       particles.push(particle);
       if (pinned) pinnedParticles.push(particle);
     }
+  }
+
+  // Exponer función dinámica para actualizar la textura tipográfica de la tela sin reiniciar el motor de física
+  window.updateCurtainText = function(newText) {
+    if (!newText || !particles || !particles.length) return;
+    fullCode = newText;
+    const glyphs = getGlyphList(newText);
+    for (const ch of new Set(glyphs)) {
+      createCharCanvas(ch);
+    }
+    for (let idx = 0; idx < particles.length; idx++) {
+      const i = Math.floor(idx / gridH);
+      const j = idx % gridH;
+      const charIndex = (i + j * gridW) % glyphs.length;
+      particles[idx].char = glyphs[charIndex] || ' ';
+    }
+  };
+  updateCurtainText = window.updateCurtainText;
+
+  if (typeof document !== 'undefined' && document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => {
+      for (const k of Object.keys(charCanvases)) {
+        delete charCanvases[k];
+      }
+      if (typeof updateCurtainText === 'function') {
+        updateCurtainText(fullCode);
+      }
+    });
   }
 
   // Creación de restricciones verticales y espaciadores horizontales de Liam Egan
@@ -167,7 +215,8 @@ function main() {
   }
 
   function drawCode() {
-    const offsetX = (c.width / dpr - width) / 2;
+    const paddingLeft = CONFIG.paddingLeft || 0;
+    const offsetX = (c.width / dpr - width) / 2 + paddingLeft;
     const offsetY = 0; // Posición exacta justo bajo el techo
     particles.forEach((p) => {
       if (!p.char || p.char === ' ') return;
@@ -488,3 +537,224 @@ if (document.readyState === 'loading') {
 } else {
   setTimeout(main, 100);
 }
+
+// Texto enriquecido con caligrafía y arquitectura marroquí tradicional formateado a 44 columnas para wrap simétrico perfecto
+const moroccanCurtainText = 
+  "TECTA السقوف المغربية العمارة الإسلامية فاس " +
+  "خشب الأرز المنحوت والزليج التقليدي الأصيل   " +
+  "فاس ومراكش تراث الأندلس وهندسة المغرب TECTA " +
+  "Moroccan Architecture TECTA فن العمارة فاس  " +
+  "أصالة وتاريخ زليج ونقش وتراث عريق خالد TECTA";
+
+// Texto enriquecido con caligrafía y arquitectura rusa tradicional formateado a 44 columnas para wrap simétrico perfecto
+const russianCurtainText = 
+  "TECTA Русские купола луковичные главы TECTA " +
+  "Деревянное зодчество и кокошники Руси TECTA " +
+  "Traditional Russian Architecture TECTA Русь " +
+  "Золотые купола и маковки старинных храмов   " +
+  "Узорочье и великая история Древней Руси     ";
+
+// Texto enriquecido con caligrafía y arquitectura tailandesa tradicional formateado a 44 columnas denso, parejo y uniforme de extremo a extremo
+const thaiCurtainText = 
+  "TECTA สถาปัตยกรรมไทย ช่อฟ้า ใบระกา หางหงส์ วัดไทย" +
+  "หลังคาระดับ สถาปัตยกรรมไทย ช่อฟ้า วัดไทย ศิลปะโบราณ" +
+  "Traditional Thai Architecture หลังคาระดับ ช่อฟ้า" +
+  "ยอดพระปรางค์ โครงสร้างไม้งาม ใบระกา หางหงส์ วิจิตร" +
+  "สถาปัตยกรรมไทย หลังคาระดับ ช่อฟ้า ศิลปะโบราณ TECTA";
+
+const roofsData = {
+  chinese: {
+    mainSrc: './images/Copilot-20260917-103956-1@2x.png',
+    title: 'The myths of Chinese roofs',
+    desc: 'Featuring the iconic double-eaved xieshan hip-and-gable roof, glazed golden tiles, and red-painted wooden brackets. Every curve and upturned corner was designed to ward off evil spirits and shelter imperial majesty.',
+    leftThumb: './images/Frame 1367 (1).png',
+    rightThumb: './images/Frame 1365 (1).png',
+    curtainText: 'Architecture Roof Myths TECTA 建筑 结构 历史 传说 中式 瓦 梁 飞檐 斗拱 传统 文化 魅力 '
+  },
+  japanese: {
+    mainSrc: './images/image 36 (1).png',
+    title: 'The myths of Japanese roofs',
+    desc: 'Rooted in tradition, Japanese temple architecture reflects a deep structural harmony with nature, utilizing meticulous timber joinery and curved ceramic tiles designed to withstand time.',
+    leftThumb: './images/Frame 1366.png',
+    rightThumb: './images/Frame 1372.png',
+    roofClass: 'is-japanese',
+    curtainText: 'TECTA 屋根 建築 伝統 神社 寺院 歴史 美学 木造 瓦 構造 Architecture Roof Myths TECTA 日本建築 文化 格式 継手 調和 自然 '
+  },
+  moroccan: {
+    mainSrc: './images/image 37.png',
+    title: 'The myths of Moroccan roofs',
+    desc: 'A masterclass in geometry and color, traditional Moroccan architecture integrates vibrant zellige mosaic tiles and intricately carved cedar woodwork designed to capture light and filter the North African sun.',
+    leftThumb: './images/Frame 1349.png',
+    rightThumb: './images/Frame 1370.png',
+    roofClass: 'is-moroccan',
+    curtainText: moroccanCurtainText,
+    scaleX: 1.20, // Incremento condicional de ~25px por lado exclusivo para cubrir perfectamente los extremos del techo marroquí
+    paddingLeft: 0
+  },
+  russian: {
+    mainSrc: './images/image 35.png', // Imagen de cúpulas rusas grandes (Desktop - 5)
+    title: 'The myths of Russian roofs',
+    desc: 'Defined by iconic bulbous onion domes and intricate wooden kokoshnik gables, traditional Russian sacred architecture reflects a celestial aspiration, blending vibrant metallic colors with timeless Orthodox craftsmanship.',
+    leftThumb: './images/Frame 1350.png', // Miniatura lateral izquierda (techo marroquí según diseño anterior Desktop - 5)
+    rightThumb: './images/Frame 1369.png', // Miniatura lateral derecha con techo dorado escalonado
+    roofClass: 'is-russian',
+    curtainText: russianCurtainText,
+    scaleX: 1.20, // Incremento condicional de ~25px por lado exclusivo para cubrir la estructura de madera del techo ruso
+    translateX: 8, // Desplazamiento horizontal de +8px hacia la derecha para alinear con simetría milimétrica ambas puntas del techo ruso
+    paddingLeft: 0
+  },
+  thai: {
+    mainSrc: './images/image 36 (2).png', // Techo dorado principal tailandés
+    title: 'The myths of Thai roofs',
+    desc: 'Characterized by multi-tiered sloping roofs, glittering golden tiles, and soaring chofah finials pointing toward the heavens, traditional Thai temple architecture symbolizes sacred Mount Meru and divine ascent.',
+    leftThumb: './images/Frame 1351.png',  // Miniatura cúpulas rusas
+    rightThumb: './images/Frame 1368.png', // Miniatura techo oscuro escalonado
+    roofClass: 'is-thai',
+    curtainText: thaiCurtainText,
+    scaleX: 1.20, // Ajuste simétrico para cubrir la base del alero de madera
+    paddingLeft: 0
+  }
+};
+
+let currentRoof = 'chinese';
+
+function setRoofState(stateKey) {
+  console.log('Switching roof state to:', stateKey);
+  const data = roofsData[stateKey];
+  if (!data) return;
+
+  const mainRoof = document.getElementById('main-roof');
+  const title = document.getElementById('article-title');
+  const desc = document.getElementById('article-desc');
+  const leftImg = document.querySelector('#btn-roof-left img');
+  const rightImg = document.querySelector('#btn-roof-right img');
+  const curtainCanvas = document.querySelector('#container canvas');
+  const containerEl = document.getElementById('container');
+  const heroStage = document.querySelector('.hero-center-stage');
+
+  // Fade out
+  if (mainRoof) mainRoof.style.opacity = '0';
+  if (title) title.style.opacity = '0';
+  if (desc) desc.style.opacity = '0';
+  if (curtainCanvas) {
+    curtainCanvas.style.transition = 'opacity 0.25s ease';
+    curtainCanvas.style.opacity = '0.35';
+  }
+
+  setTimeout(() => {
+    if (mainRoof) {
+      mainRoof.src = data.mainSrc;
+      // Remueve las clases previas y añade únicamente la clase correspondiente al estado activo
+      mainRoof.classList.remove('is-japanese', 'is-moroccan', 'is-russian', 'is-thai');
+      if (data.roofClass) {
+        mainRoof.classList.add(data.roofClass);
+      }
+      mainRoof.style.opacity = '1';
+    }
+    if (containerEl) {
+      containerEl.classList.remove('is-japanese', 'is-moroccan', 'is-russian', 'is-thai');
+      if (data.roofClass) {
+        containerEl.classList.add(data.roofClass);
+      }
+    }
+    if (curtainCanvas) {
+      curtainCanvas.classList.remove('is-japanese', 'is-moroccan', 'is-russian', 'is-thai');
+      if (data.roofClass) {
+        curtainCanvas.classList.add(data.roofClass);
+      }
+      if (data.scaleX) {
+        const tx = data.translateX ? `translateX(${data.translateX}px) ` : '';
+        curtainCanvas.style.transform = `${tx}scaleX(${data.scaleX})`;
+        curtainCanvas.style.transformOrigin = 'center top';
+      } else {
+        curtainCanvas.style.transform = 'none';
+      }
+    }
+    if (heroStage) {
+      heroStage.classList.remove('state-japanese', 'state-moroccan', 'state-russian', 'state-chinese', 'state-thai');
+      heroStage.classList.add('state-' + stateKey);
+    }
+    if (title) {
+      title.textContent = data.title;
+      title.style.opacity = '1';
+    }
+    if (desc) {
+      desc.textContent = data.desc;
+      desc.style.opacity = '1';
+    }
+    if (leftImg) leftImg.src = data.leftThumb;
+    if (rightImg) rightImg.src = data.rightThumb;
+
+    // Ajuste condicional exclusivo sin alterar el ancho global del canvas
+    if (data.paddingLeft !== undefined) {
+      CONFIG.paddingLeft = data.paddingLeft;
+    } else {
+      CONFIG.paddingLeft = 0;
+    }
+    if (data.curtainText && typeof updateCurtainText === 'function') {
+      updateCurtainText(data.curtainText);
+    }
+    if (curtainCanvas) {
+      curtainCanvas.style.opacity = '1';
+      curtainCanvas.style.filter = 'none';
+    }
+
+    currentRoof = stateKey;
+    console.log('Roof state successfully switched to:', currentRoof);
+  }, 250);
+}
+
+function initRoofTransitions() {
+  const mainRoof = document.getElementById('main-roof');
+  const btnLeft = document.getElementById('btn-roof-left');
+  const btnRight = document.getElementById('btn-roof-right');
+
+  console.log('Main roof element:', mainRoof);
+  console.log('Left button:', btnLeft);
+  console.log('Right button:', btnRight);
+
+  // Navegación secuencial ampliada (chinese -> japanese -> moroccan -> russian -> thai)
+  btnRight?.addEventListener('click', (e) => {
+    e.preventDefault();
+    console.log('Right button clicked! currentRoof:', currentRoof);
+    if (currentRoof === 'chinese') {
+      setRoofState('japanese');
+    } else if (currentRoof === 'japanese') {
+      setRoofState('moroccan');
+    } else if (currentRoof === 'moroccan') {
+      setRoofState('russian');
+    } else if (currentRoof === 'russian') {
+      setRoofState('thai');
+    } else if (currentRoof === 'thai') {
+      setRoofState('chinese');
+    }
+  });
+
+  btnLeft?.addEventListener('click', (e) => {
+    e.preventDefault();
+    console.log('Left button clicked! currentRoof:', currentRoof);
+    if (currentRoof === 'thai') {
+      setRoofState('russian');
+    } else if (currentRoof === 'russian') {
+      setRoofState('moroccan');
+    } else if (currentRoof === 'moroccan') {
+      setRoofState('japanese');
+    } else if (currentRoof === 'japanese') {
+      setRoofState('chinese');
+    } else if (currentRoof === 'chinese') {
+      setRoofState('thai');
+    }
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initRoofTransitions);
+} else {
+  initRoofTransitions();
+}
+
+window.moroccanCurtainText = moroccanCurtainText;
+window.russianCurtainText = russianCurtainText;
+window.thaiCurtainText = thaiCurtainText;
+window.roofsData = roofsData;
+window.setRoofState = setRoofState;

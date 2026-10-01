@@ -4,7 +4,7 @@
 
 body {
   background-color: var(--color-dimgray);
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .desktop-9 {
@@ -62,20 +62,59 @@ body {
   user-select: none;
 }
 
-/* Chinese Roof Asset */
+/* Chinese Roof Asset (Base / Desktop - 9) */
 .copilot-20260917-103956-1-icon {
-  width: 749px;
-  height: 258px;
+  width: 749px !important;
+  height: 258px !important;
+  top: 108px !important;
+  left: calc(50% - 376px) !important;
+  transform: none !important;
+  object-fit: cover !important;
   position: absolute;
   margin: 0 !important;
-  top: 108px;
-  left: 50%;
-  transform: translateX(-50%);
-  object-fit: cover;
-  z-index: 10;
+  flex-shrink: 0;
+  z-index: 4;
+  transition: opacity 0.25s ease;
   filter: drop-shadow(35px 35px 35px rgba(0, 0, 0, 0.3));
   pointer-events: none;
   user-select: none;
+}
+
+/* Japanese Roof Asset Modifier (Desktop - 3) */
+.copilot-20260917-103956-1-icon.is-japanese {
+  width: 740px !important;
+  height: 191px !important;
+  top: 135px !important;
+  left: calc(50% - 370px) !important;
+  object-fit: contain !important;
+}
+
+/* Moroccan Roof Asset Modifier (Desktop - 4) */
+.copilot-20260917-103956-1-icon.is-moroccan {
+  width: 740px !important;
+  height: auto !important;
+  top: 138px !important; /* Bajado ~28px para que la moldura calce perfecto con la tela */
+  left: calc(50% - 370px) !important;
+  object-fit: contain !important;
+}
+
+/* Russian Roof Asset Modifier (Desktop - 5) */
+.copilot-20260917-103956-1-icon.is-russian {
+  width: 740px !important;
+  height: auto !important;
+  top: 110px !important; /* Ajustado para que asiente perfectamente sobre la cortina */
+  left: calc(50% - 370px) !important;
+  object-fit: contain !important;
+}
+
+/* Thai Roof Asset Modifier (Desktop - 6) */
+.copilot-20260917-103956-1-icon.is-thai {
+  width: 740px !important;
+  height: auto !important;
+  top: 110px !important;
+  left: calc(50% - 370px) !important;
+  object-fit: contain !important;
+  filter: drop-shadow(0px 10px 18px rgba(0, 0, 0, 0.15)) !important; /* Sombra suave y limpia que no oscurece la tela de la cortina */
 }
 
 /* Top Navigation Section */
@@ -168,10 +207,11 @@ body {
   user-select: none;
 }
 
-/* Physics Curtain Canvas Alignment under TECTA Roof */
-#container {
+/* Physics Curtain Canvas Alignment under TECTA Roof (Standard for all screens) */
+#container,
+.curtain-container {
   position: absolute;
-  top: 320px;
+  top: 280px;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
@@ -184,12 +224,53 @@ body {
   z-index: 2;
 }
 
-#container canvas {
+#container canvas,
+.curtain-container canvas {
   display: block;
   margin: 0 auto;
   pointer-events: auto;
   overflow: visible !important;
   background: transparent !important;
+  transition: transform 0.3s ease, opacity 0.25s ease;
+  transform-origin: center top;
+}
+
+/* Modificador condicional exclusivo para el estado marroquí */
+#container.is-moroccan,
+.curtain-container.is-moroccan {
+  top: 280px;
+}
+
+#container.is-moroccan canvas,
+.curtain-container.is-moroccan canvas,
+canvas.is-moroccan {
+  transform: scaleX(1.20); /* Incremento condicional de ~25px a 30px por lado exclusivo para Marruecos */
+}
+
+/* Modificador condicional exclusivo para el estado ruso */
+#container.is-russian,
+.curtain-container.is-russian {
+  top: 280px;
+}
+
+#container.is-russian canvas,
+.curtain-container.is-russian canvas,
+canvas.is-russian {
+  transform: translateX(8px) scaleX(1.20); /* Desplazamiento horizontal de +8px hacia la derecha para centrado y simetría milimétrica con el techo ruso */
+}
+
+/* Modificador condicional exclusivo para el estado tailandés */
+#container.is-thai,
+.curtain-container.is-thai {
+  top: 280px;
+}
+
+#container.is-thai canvas,
+.curtain-container.is-thai canvas,
+canvas.is-thai {
+  transform: scaleX(1.20); /* Ajuste simétrico de ancho idéntico al estándar para cubrir la base del techo */
+  opacity: 0.88 !important; /* Igualar luminosidad, transparencia y suavidad de las demás pantallas */
+  filter: brightness(1.25) contrast(0.96) !important; /* Aclara los glifos para un acabado idéntico a China, Japón, Marruecos y Rusia */
 }
 
 /* Bottom Content: Paragraph & Headline */
@@ -197,25 +278,28 @@ body {
   width: 100%;
   max-width: 1320px;
   position: absolute;
-  bottom: 475px;
+  top: calc(50% + 26px) !important;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: flex-start;
   padding: 0 60px;
   box-sizing: border-box;
   z-index: 20;
   pointer-events: auto;
 }
 
-.featuring-the-iconic {
+.featuring-the-iconic,
+#article-desc {
   max-width: 323px;
   font-family: var(--font-outfit);
   font-size: var(--fs-16);
   font-weight: 400;
   line-height: 1.45;
   color: var(--color-gray-200);
+  margin: 0;
+  padding: 0;
 }
 
 .article-container {
@@ -231,7 +315,8 @@ body {
   position: relative;
 }
 
-.the-myths-of {
+.the-myths-of,
+#article-title {
   font-family: var(--font-adamina);
   font-size: 50px;
   line-height: 1.35;
@@ -239,6 +324,7 @@ body {
   color: var(--color-gray-200);
   max-width: 340px;
   margin: 0;
+  padding: 0;
 }
 
 .frame-item {
@@ -318,4 +404,80 @@ body {
   .frame-item {
     display: none;
   }
+}
+
+/* Contenedor a los costados del óvalo central */
+.roof-selector-controls {
+  position: absolute;
+  top: 306px; /* Subido otros 50px (de 356px a 306px) */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1130px !important; /* Reducido 50px en total para 25px por cada lado */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none; /* No bloquea clics al centro */
+  z-index: 100 !important;
+}
+
+/* Botones laterales interactivos */
+.roof-thumb-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer !important;
+  outline: none;
+  pointer-events: auto !important; /* Permite clics en las miniaturas */
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 101 !important;
+}
+
+.roof-thumb-btn img {
+  pointer-events: none;
+}
+
+.roof-thumb-btn.btn-left {
+  margin-left: 75px !important;
+}
+
+.roof-thumb-btn.btn-right {
+  margin-right: 75px !important;
+}
+
+.roof-thumb-btn:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.roof-thumb-btn:active {
+  transform: scale(0.96);
+}
+
+/* Reducir aún más el tamaño de las miniaturas laterales */
+.thumb-img,
+.card-container-icon,
+.merged-asset-1-icon {
+  width: 145px !important;
+  height: auto !important;
+  max-width: 100% !important;
+  display: block;
+  object-fit: contain;
+}
+
+.card-container {
+  width: 145px !important;
+  height: auto !important;
+}
+
+/* Transición del techo principal y textos */
+.copilot-20260917-103956-1-icon,
+#article-title,
+#article-desc {
+  transition: opacity 0.25s ease;
 }

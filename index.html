@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500&family=Noto+Sans+Thai:wght@300;400;500;600&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue:wght@400&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Adamina:wght@400&display=swap" />
   </head>
@@ -18,7 +19,7 @@
         class="desktop-9-child"
         loading="lazy"
         alt=""
-        src="./Rectangle-2.svg"
+        src="./images/Rectangle-2.svg"
       />
 
       <section class="desktop-92">
@@ -28,7 +29,7 @@
               class="frame-child"
               loading="lazy"
               alt="TECTA Leaf Logo"
-              src="./Ellipse-1.svg"
+              src="./images/Ellipse-1.svg"
             />
 
             <nav class="home-parent">
@@ -48,22 +49,45 @@
         <img
           class="copilot-20260917-102901-1-icon"
           alt="Textured Oval Shape"
-          src="./Copilot-20260917-102901-1@2x.png"
+          src="./images/Copilot-20260917-102901-1@2x.png"
         />
 
         <!-- Physics strings container sits behind roof asset -->
-        <div id="container"></div>
+        <div id="container" class="curtain-container"></div>
 
         <img
+          id="main-roof"
           class="copilot-20260917-103956-1-icon"
-          alt="Chinese Architectural Roof"
-          src="./Copilot_20260917_103956 1 (1).png"
-          onerror="this.src='./Copilot-20260917-103956-1@2x.png'"
+          alt="Main Roof"
+          src="./images/Copilot-20260917-103956-1@2x.png"
         />
       </div>
 
+      <!-- Selector lateral de techos -->
+      <div class="roof-selector-controls">
+        <!-- Techo lateral izquierdo -->
+        <button type="button" class="roof-thumb-btn btn-left" id="btn-roof-left" aria-label="Seleccionar techo lateral izquierdo">
+          <img
+            class="thumb-img"
+            loading="lazy"
+            alt="Techo Lateral Izquierdo"
+            src="./images/Frame 1367 (1).png"
+          />
+        </button>
+
+        <!-- Techo lateral derecho -->
+        <button type="button" class="roof-thumb-btn btn-right" id="btn-roof-right" aria-label="Seleccionar techo lateral derecho">
+          <img
+            class="thumb-img"
+            loading="lazy"
+            alt="Techo Lateral Derecho"
+            src="./images/Frame 1365 (1).png"
+          />
+        </button>
+      </div>
+
       <section class="featuring-the-iconic-double-ea-parent">
-        <div class="featuring-the-iconic">
+        <div id="article-desc" class="featuring-the-iconic">
           Featuring the iconic double-eaved xieshan hip-and-gable roof, glazed
           golden tiles, and red-painted wooden brackets. Every curve and
           upturned corner was designed to ward off evil spirits and shelter
@@ -71,7 +95,7 @@
         </div>
         <div class="article-container">
           <div class="the-myths-of-chinese-roofs-parent">
-            <h1 class="the-myths-of">The myths of Chinese roofs</h1>
+            <h1 id="article-title" class="the-myths-of">The myths of Chinese roofs</h1>
             <div class="frame-item"></div>
           </div>
         </div>
@@ -79,6 +103,6 @@
     </div>
 
     <!-- Interactive text strings simulation -->
-    <script src="script.js?v=liam_egan_original_v11"></script>
+    <script src="./script.js"></script>
   </body>
 </html>

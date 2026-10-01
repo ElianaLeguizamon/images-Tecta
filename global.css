@@ -3,6 +3,23 @@ body {
   line-height: normal;
 }
 
+/* Desactivar scroll y ocultar barra de desplazamiento */
+html, body {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE / Edge */
+}
+
+/* Ocultar scrollbar en Chrome, Safari y navegadores basados en Chromium */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
 :root {
   /* Color Palette */
   --color-black: #000;
