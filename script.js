@@ -160,7 +160,7 @@ const roofsData = {
     baseFrequency: 659
   },
   norwegian: {
-    mainSrc: './images/image.png',
+    mainSrc: './images/norwegian-roof.png',
     title: 'The myths of Norwegian roofs',
     desc: 'Built with medieval engineering and overlapping layers of dark tarred wooden shingles, traditional Norwegian stave church roofs feature striking dragon-head finials, combining fierce Norse mythology with sacred Christian architecture.',
     leftThumb: './images/Frame 1352.png',
