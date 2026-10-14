@@ -117,13 +117,31 @@ body {
   filter: drop-shadow(0px 10px 18px rgba(0, 0, 0, 0.15)) !important; /* Sombra suave y limpia que no oscurece la tela de la cortina */
 }
 
+/* Norwegian Roof Asset Modifier (Desktop - 7 / Desktop - Norwegian Roofs) */
+.copilot-20260917-103956-1-icon.is-norwegian {
+  width: 740px !important;
+  height: auto !important;
+  top: 110px !important;
+  left: calc(50% - 370px) !important;
+  object-fit: contain !important;
+}
+
+/* Romanian Roof Asset Modifier */
+.copilot-20260917-103956-1-icon.is-romanian {
+  width: 580px !important;
+  height: auto !important;
+  top: 190px !important;
+  left: calc(50% - 290px) !important;
+  object-fit: contain !important;
+}
+
 /* Top Navigation Section */
 .desktop-92 {
   width: 100%;
   max-width: 1046px;
   position: relative;
   top: -20px;
-  z-index: 20;
+  z-index: 200;
   margin: 0 auto;
 }
 
@@ -180,31 +198,435 @@ body {
   transform: translateY(-1px);
 }
 
-.auth-container {
-  background-color: var(--color-gray-200);
-  border: none;
-  border-radius: 2px;
-  padding: 8px 24px;
+.play-wrapper {
+  position: relative;
+  display: inline-block;
+  z-index: 500;
+}
+
+.play-btn {
+  background-color: var(--color-gray-200); /* #001533 */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  padding: 6px 20px 6px 18px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.auth-container:hover {
-  background-color: #0b2447;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 21, 51, 0.25);
-}
-
-.sign-up {
-  font-family: var(--font-outfit);
-  font-size: var(--fs-16);
-  font-weight: 500;
-  color: var(--color-white);
-  line-height: normal;
   user-select: none;
+}
+
+.play-btn:hover {
+  background-color: #082142;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 21, 51, 0.35);
+}
+
+.play-btn:active {
+  transform: translateY(0);
+}
+
+.play-icon {
+  color: #ffffff;
+  font-size: 11px;
+  line-height: 1;
+  display: inline-block;
+  transform: translateY(-0.5px);
+}
+
+.play-text {
+  font-family: var(--font-adamina), Georgia, serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #ffffff;
+  line-height: normal;
+}
+
+/* Studio Floating Control Panel */
+.studio-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 350px;
+  max-height: calc(100vh - 120px);
+  background-color: #E2E7DE;
+  border: 1px solid rgba(18, 39, 16, 0.25);
+  border-radius: 12px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35), 0 2px 8px rgba(0, 0, 0, 0.12);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #5E755C #E2E7DE;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px) scale(0.98);
+  pointer-events: none;
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s;
+}
+
+.studio-panel::-webkit-scrollbar {
+  width: 5px;
+}
+.studio-panel::-webkit-scrollbar-track {
+  background: #E2E7DE;
+}
+.studio-panel::-webkit-scrollbar-thumb {
+  background: #5E755C;
+  border-radius: 3px;
+}
+
+.studio-panel.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* Studio Header */
+.studio-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px 10px;
+  background-color: #E2E7DE;
+  border-bottom: 1px solid rgba(18, 39, 16, 0.08);
+}
+
+.studio-tag {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #5E755C;
+}
+
+.studio-title {
+  font-family: var(--font-adamina), Georgia, serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: #001533;
+  margin: 0;
+  line-height: 1;
+  letter-spacing: 0.5px;
+}
+
+.studio-close-btn {
+  background: transparent;
+  border: 1.5px solid #5E755C;
+  border-radius: 50%;
+  width: 17px;
+  height: 17px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #5E755C;
+  font-size: 11px;
+  font-family: monospace;
+  line-height: 1;
+  padding: 0;
+  transition: all 0.15s ease;
+}
+
+.studio-close-btn:hover {
+  background-color: #5E755C;
+  color: #E2E7DE;
+}
+
+/* Studio Collapsible Sections */
+.studio-section {
+  border-bottom: 1px solid rgba(18, 39, 16, 0.08);
+}
+
+.studio-section:last-child {
+  border-bottom: none;
+}
+
+.studio-section-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #5E755C;
+  color: #ffffff;
+  padding: 7px 16px;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+.studio-section-header:hover {
+  background-color: #51674f;
+}
+
+.section-title {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.section-icon {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  opacity: 0.85;
+  transition: transform 0.25s ease;
+  display: inline-block;
+}
+
+.studio-section.is-collapsed .section-icon {
+  transform: rotate(90deg);
+}
+
+.studio-section-body {
+  background-color: #E2E7DE;
+  padding: 10px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: max-height 0.25s ease, padding 0.25s ease, opacity 0.2s ease;
+  overflow: hidden;
+}
+
+.studio-section.is-collapsed .studio-section-body {
+  max-height: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Destination Select */
+.destination-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.studio-select-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 64%;
+}
+
+.studio-select {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  background-color: #001533;
+  color: #ffffff;
+  border: none;
+  border-radius: 3px;
+  padding: 6px 28px 6px 12px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.studio-select:hover {
+  background-color: #082142;
+}
+
+.select-chevron {
+  position: absolute;
+  right: 10px;
+  pointer-events: none;
+  color: #ffffff;
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* Studio Rows (Sliders & Textboxes) */
+.studio-row {
+  display: grid;
+  grid-template-columns: 88px 1fr 52px;
+  align-items: center;
+  gap: 8px;
+}
+
+.studio-label {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: #334766;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.studio-range-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.studio-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, #001533 0%, rgba(0, 21, 51, 0.2) 100%);
+  outline: none;
+  margin: 0;
+  cursor: pointer;
+}
+
+.studio-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #001533;
+  border: 2px solid #E2E7DE;
+  box-shadow: 0 0 0 2px #001533, inset 0 0 0 2px #E2E7DE;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.studio-range::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+.studio-range::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #001533;
+  border: 2px solid #E2E7DE;
+  box-shadow: 0 0 0 2px #001533, inset 0 0 0 2px #E2E7DE;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.studio-number-input {
+  width: 52px;
+  height: 24px;
+  background-color: #F5F8F3;
+  border: 1px solid rgba(0, 21, 51, 0.2);
+  border-radius: 2px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: #001533;
+  text-align: right;
+  padding: 2px 5px;
+  -moz-appearance: textfield;
+}
+
+.studio-number-input::-webkit-inner-spin-button,
+.studio-number-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.studio-number-input:focus {
+  outline: 1px solid #001533;
+  background-color: #ffffff;
+}
+
+/* Rebuild Cloth Button */
+.btn-rebuild-cloth {
+  background-color: #122710;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  margin-top: 4px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.btn-rebuild-cloth:hover {
+  background-color: #1b3818;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(18, 39, 16, 0.35);
+}
+
+.btn-rebuild-cloth:active {
+  transform: translateY(0);
+}
+
+.rebuild-text {
+  font-family: var(--font-adamina), Georgia, serif;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.rebuild-arrow {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Checkbox Rows */
+.studio-checkbox-row {
+  grid-template-columns: 88px 1fr !important;
+}
+
+.studio-checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  width: fit-content;
+}
+
+.studio-checkbox-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+
+.studio-checkbox-box {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid #001533;
+  border-radius: 2px;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.studio-checkbox-input:checked + .studio-checkbox-box {
+  background-color: #001533;
+  border-color: #001533;
+}
+
+.checkbox-mark {
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1;
+  opacity: 0;
+  font-family: monospace;
+  transform: scale(0.8);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.studio-checkbox-input:checked + .studio-checkbox-box .checkbox-mark {
+  opacity: 1;
+  transform: scale(1);
 }
 
 /* Physics Curtain Canvas Alignment under TECTA Roof (Standard for all screens) */
@@ -269,8 +691,30 @@ canvas.is-russian {
 .curtain-container.is-thai canvas,
 canvas.is-thai {
   transform: scaleX(1.20); /* Ajuste simétrico de ancho idéntico al estándar para cubrir la base del techo */
-  opacity: 0.88 !important; /* Igualar luminosidad, transparencia y suavidad de las demás pantallas */
-  filter: brightness(1.25) contrast(0.96) !important; /* Aclara los glifos para un acabado idéntico a China, Japón, Marruecos y Rusia */
+}
+
+/* Modificador condicional exclusivo para el estado noruego */
+#container.is-norwegian,
+.curtain-container.is-norwegian {
+  top: 280px;
+}
+
+#container.is-norwegian canvas,
+.curtain-container.is-norwegian canvas,
+canvas.is-norwegian {
+  transform: scaleX(1.20);
+}
+
+/* Modificador condicional exclusivo para el estado rumano */
+#container.is-romanian,
+.curtain-container.is-romanian {
+  top: 325px;
+}
+
+#container.is-romanian canvas,
+.curtain-container.is-romanian canvas,
+canvas.is-romanian {
+  transform: scaleX(1.00);
 }
 
 /* Bottom Content: Paragraph & Headline */
